@@ -53,6 +53,7 @@ const Repository = ({reposUrl}) => {
 			</Flex>
 		)}
 
+		{/* the sort is done to make the repos appear in the decreasing order of stars */}
         {repos.sort((a, b) => b.stargazers_count - a.stargazers_count).map((repo, id) => {
             if(id > 4 && !showMore){
                 return null;
@@ -92,7 +93,7 @@ const Repository = ({reposUrl}) => {
 				<Badge fontSize={"0.9em"} colorScheme='orange' flex={1} textAlign={"center"}>
 					Stars: {repo.stargazers_count}
 				</Badge>
-				<Badge fontSize={"0.9em"} colorScheme='pink' flex={1} textAlign={"center"}>
+				<Badge fontSize={"0.9em"} colorScheme='purple' flex={1} textAlign={"center"}>
 					Forks: {repo.forks_count}
 				</Badge>
 				<Badge fontSize={"0.9em"} colorScheme='cyan' flex={1} textAlign={"center"}>

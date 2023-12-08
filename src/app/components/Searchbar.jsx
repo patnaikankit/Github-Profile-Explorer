@@ -9,6 +9,24 @@ const Searchbar = ({setData, setLoading}) => {
 
     const [name, setName] = useState("");
 
+    // to save the users we have previously searched for in the local storage
+    const saveToLocalStorage = (data, username) => {
+      const users = JSON.parse(localStorage.getItem("github-users")) || [];
+		  const userExists = users.find((user) => user.id === username);
+      // this is done to make that if we are searching for a user whom we have already searched before and is present in the search history then his id his replaced to the top and the previous search is discarded
+      // this is done in order to avoid duplicates and to maintain the search order 
+      if (userExists) {
+        users.splice(users.indexOf(userExists), 1);
+      }
+      users.unshift({
+        id: username,
+        avatar_url: data.avatar_url,
+        name: data.name,
+        url: data.html_url,
+      });
+      localStorage.setItem("github-users", JSON.stringify(users));
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if(!name){
@@ -29,6 +47,7 @@ const Searchbar = ({setData, setLoading}) => {
 				});
             }
             setData(data);
+            saveToLocalStorage(data, name);
         }
         catch(error){
             toast({
